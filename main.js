@@ -7,6 +7,10 @@ async function getPosts() {
   const data = await response.json();
   console.log(data);
   showOutput(data);
+  // const ids = data.map((data) => data.id);
+  // const titles = data.title;
+
+  // console.log(ids);
 }
 
 function showOutput(data) {
@@ -26,9 +30,24 @@ function showOutput(data) {
       data[i].title +
       ' ' +
       'body: ' +
-      data[i].body;
+      data[i].body +
+      `<button onClick="save(${data[i].id}, '${data[i].title}')">save</button>`;
     mainContainer.appendChild(div);
   }
 }
 
 getPosts();
+
+let selectedPosts = [];
+
+function save(id, title) {
+  let savedPost = {
+    id: id,
+    title: title,
+  };
+  console.log(savedPost);
+
+  selectedPosts.push(savedPost);
+
+  localStorage.setItem('saved post', JSON.stringify(selectedPosts));
+}
