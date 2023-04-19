@@ -1,0 +1,15 @@
+#data-div {
+    display: grid;
+    grid-template-columns: 5% 5% 40% 40% 10%
+}
+
+.table-div {
+    display: grid;
+    grid-template-columns: 5% 5% 40% 40% 10%
+
+}
+
+#saved {
+    display: none;
+}
+
