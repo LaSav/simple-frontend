@@ -39,6 +39,8 @@ function savePost(id, title) {
     saved: true,
   };
   checkLocal(savedPost);
+  console.log('saved posts', savedPosts);
+  console.log('saved post', savedPost);
 }
 
 function getLocalPosts() {
@@ -53,9 +55,12 @@ function checkLocal(savedPost) {
     savedPosts.push(savedPost);
     localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
   } else {
-    if (savedPosts.includes(savedPost) == false) {
+    const exists = savedPosts.some(
+      (post) => post.id === savedPost.id && post.title === savedPost.title
+    );
+    if (!exists) {
       savedPosts.push(savedPost);
+      localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
     }
-    localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
   }
 }
