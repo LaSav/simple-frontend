@@ -6,10 +6,6 @@ async function getPosts() {
   );
   const data = await response.json();
   showOutput(data);
-  // const ids = data.map((data) => data.id);
-  // const titles = data.title;
-
-  // console.log(ids);
 }
 
 function showOutput(data) {
@@ -22,12 +18,21 @@ function showOutput(data) {
     out += `
     <div class="item" id="item">${post.userId}</div>
     <div class="item" id="item">${post.id}</div>
-    <div class="item" id="item" onClick="savePost(${post.id}, '${post.title}')">${post.title}</div>
+    <div class="item" id="item" data-post-id="${post.id}" data-post-title="${post.title}">${post.title}</div>
     <div class="item" id="item">${post.body}</div>
     <div class="item" id="item"><p id="saved">${post.saved}</p></div>
     `;
   }
   mainContainer.innerHTML = out;
+
+  const postElements = document.querySelectorAll('.item');
+  postElements.forEach((postElement) => {
+    postElement.addEventListener('click', (event) => {
+      const postId = event.target.dataset.postId;
+      const postTitle = event.target.dataset.postTitle;
+      savePost(postId, postTitle);
+    });
+  });
 }
 
 getPosts();
@@ -41,6 +46,10 @@ function savePost(id, title) {
   checkLocal(savedPost);
   console.log('saved posts', savedPosts);
   console.log('saved post', savedPost);
+}
+
+function removePost() {
+  getLocalPosts();
 }
 
 function getLocalPosts() {
