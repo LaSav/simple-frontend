@@ -20,11 +20,11 @@ function showOutput(data) {
   for (post of posts) {
     post.saved = false;
     out += `
-    <div class="item">${post.userId}</div>
-    <div class="item">${post.id}</div>
-    <div class="item" onClick="save(${post.id}, '${post.title}')">${post.title}</div>
-    <div class="item">${post.body}</div>
-    <div class="item"><p id="saved">${post.saved}</p></div>
+    <div class="item" id="item">${post.userId}</div>
+    <div class="item" id="item">${post.id}</div>
+    <div class="item" id="item" onClick="savePost(${post.id}, '${post.title}')">${post.title}</div>
+    <div class="item" id="item">${post.body}</div>
+    <div class="item" id="item"><p id="saved">${post.saved}</p></div>
     `;
   }
   mainContainer.innerHTML = out;
@@ -32,33 +32,30 @@ function showOutput(data) {
 
 getPosts();
 
-let selectedPosts = [];
-
-const savedPostsJSON = localStorage.getItem('savedPosts');
-const savedPosts = JSON.parse(savedPostsJSON);
-selectedPosts.push(savedPosts);
-
-console.log('selected posts', selectedPosts);
-
-function save(id, title) {
+function savePost(id, title) {
   let savedPost = {
     id: id,
     title: title,
     saved: true,
   };
-  console.log(savedPost);
-
-  if (selectedPosts.includes(savedPost) == false) {
-    selectedPosts.push(savedPost);
-  }
-
-  localStorage.setItem('savedPosts', JSON.stringify(selectedPosts));
+  checkLocal(savedPost);
 }
 
-// console.log('parsed saved posts', savedPosts);
+function getLocalPosts() {
+  savedPostsJSON = localStorage.getItem('savedPosts');
+  savedPosts = JSON.parse(savedPostsJSON);
+}
 
-// for (savedPost of savedPosts) {
-//   if (savedPost.saved === true) {
-//     document.getElementById('saved').style.display = 'inline';
-//   }
-// }
+function checkLocal(savedPost) {
+  getLocalPosts();
+  if (savedPosts == null) {
+    savedPosts = [];
+    savedPosts.push(savedPost);
+    localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+  } else {
+    if (savedPosts.includes(savedPost) == false) {
+      savedPosts.push(savedPost);
+    }
+    localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+  }
+}
