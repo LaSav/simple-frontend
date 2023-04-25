@@ -48,10 +48,6 @@ function savePost(id, title) {
   console.log('saved post', savedPost);
 }
 
-function removePost() {
-  getLocalPosts();
-}
-
 function getLocalPosts() {
   savedPostsJSON = localStorage.getItem('savedPosts');
   savedPosts = JSON.parse(savedPostsJSON);
@@ -59,6 +55,7 @@ function getLocalPosts() {
 
 function checkLocal(savedPost) {
   getLocalPosts();
+  const index = savedPosts.findIndex((post) => post.id === savedPost.id);
   if (savedPosts == null) {
     savedPosts = [];
     savedPosts.push(savedPost);
@@ -69,6 +66,10 @@ function checkLocal(savedPost) {
     );
     if (!exists) {
       savedPosts.push(savedPost);
+      localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+    }
+    if (exists) {
+      savedPosts.splice(index, 1);
       localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
     }
   }

@@ -9,3 +9,10 @@
 
 }
 
+.item {
+    background-color: white;
+}
+
+.item.selected {
+    background-color: white;
+}
