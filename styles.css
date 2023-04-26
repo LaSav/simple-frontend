@@ -9,10 +9,7 @@
 
 }
 
-.item {
-    background-color: white;
-}
 
-.item.selected {
-    background-color: white;
+.selected {
+    background-color: aquamarine;
 }

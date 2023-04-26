@@ -1,5 +1,3 @@
-// non-asynchronous fetch function goes here
-
 async function getPosts() {
   const response = await fetch(
     'https://jsonplaceholder.typicode.com/posts?_limit=10'
@@ -9,8 +7,8 @@ async function getPosts() {
 }
 
 function showOutput(data) {
+  getLocalPosts();
   const posts = data;
-  // console.log(posts);
   let mainContainer = document.getElementById('data-div');
   let out = '';
   for (post of posts) {
@@ -31,7 +29,13 @@ function showOutput(data) {
       const postId = event.target.dataset.postId;
       const postTitle = event.target.dataset.postTitle;
       savePost(postId, postTitle);
+      postElement.classList.toggle('selected');
     });
+    const postElementId = postElement.dataset.postId;
+    const exists = savedPosts.some((post) => post.id === postElementId);
+    if (exists) {
+      postElement.classList.toggle('selected');
+    }
   });
 }
 
@@ -44,8 +48,6 @@ function savePost(id, title) {
     saved: true,
   };
   checkLocal(savedPost);
-  console.log('saved posts', savedPosts);
-  console.log('saved post', savedPost);
 }
 
 function getLocalPosts() {
