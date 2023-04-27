@@ -1,15 +1,23 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #fafafa;
+}
+
 #data-div {
     display: grid;
-    grid-template-columns: 5% 5% 40% 40% 10%
+    grid-template-columns: 5% 5% 40% 40% 10%;
+    column-gap: 5px;
+    row-gap: 10px;
 }
 
 .table-div {
     display: grid;
-    grid-template-columns: 5% 5% 40% 40% 10%
+    grid-template-columns: 5% 5% 40% 40% 10%;
+    column-gap: 5px;
 
 }
-
 
 .selected {
     background-color: aquamarine;
 }
+
